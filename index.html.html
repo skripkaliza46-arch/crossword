@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<title>Кросворд «Митниця і залізниця»</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#ffffff !important;color:#000;font-family:Arial,Helvetica,sans-serif}
+body{padding:10px;background:#ffffff !important}
+.page{max-width:920px;margin:0 auto;background:#ffffff !important}
+.hero{background:#ffffff !important;border:2px solid #000;border-radius:14px;padding:12px;margin-bottom:10px}
+.hero h1{margin:0;text-align:center;font-size:24px}
+.box{background:#ffffff !important;border:2px solid #000;border-radius:14px;padding:10px;margin-bottom:10px}
+.board-wrap{overflow:auto;-webkit-overflow-scrolling:touch;background:#ffffff !important;border-radius:10px;padding:6px}
+table{border-collapse:separate;border-spacing:0;margin:0 auto;min-width:max-content;background:#ffffff !important}
+td{width:26px;height:26px;border:1px solid #000 !important;padding:0;position:relative;background:#ffffff !important;transition:background-color .2s ease}
+td.black{background:#ffffff !important;border:none !important}
+td input{width:100%;height:100%;border:0;margin:0;padding:0;background:#ffffff !important;text-align:center;font-size:14px;font-weight:700;text-transform:uppercase;color:#000;outline:none;-webkit-appearance:none;appearance:none;border-radius:0}
+td input:focus{background:#f0f0f0}
+.num{position:absolute;top:1px;left:2px;font-size:9px;line-height:1;font-weight:700;pointer-events:none;color:#000}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+button{border:0;border-radius:10px;padding:11px 8px;font-size:14px;font-weight:700;color:#fff;background:#000;cursor:pointer}
+button:active{transform:scale(.99)}
+button:nth-child(2){background:#333} button:nth-child(3){background:#555} button:nth-child(4){background:#777}
+td.ok{background:#dff2df !important}
+td.bad{background:#f6dada !important}
+td.hint{background:#eef2f5 !important}
+.card{border:1px solid #000;border-radius:10px;padding:10px;margin-top:10px;background:#ffffff !important}
+.card h2,.card h3{margin:0 0 8px 0}
+ol{margin:0;padding-left:22px} li{margin:6px 0;line-height:1.35}
+.note{margin-top:8px;font-size:12px}
+@media (max-width:480px){
+  body{padding:6px}
+  .page{max-width:100%}
+  .hero h1{font-size:20px}
+  .box{padding:8px}
+  td{width:24px;height:24px}
+  td input{font-size:13px}
+  .num{font-size:8px}
+  .btns{grid-template-columns:1fr 1fr}
+}
+
+body, .page, .hero, .box, .board-wrap, table, .card { background:#ffffff !important; }
+td.black, td.black * { background:#ffffff !important; border:none !important; box-shadow:none !important; }
+
+
+td.ok input{background:#dff2df !important;}
+td.bad input{background:#f6dada !important;}
+td.hint input{background:#eef2f5 !important;}
+
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="hero"><h1>Кросворд «Митниця і залізниця»</h1>
+    <div class="btns">
+      <div id="result" style="margin-top:10px;font-weight:bold;text-align:center"></div>
+      <button type="button" onclick="checkAll()">Перевірити</button>
+<button type="button" onclick="clearAll()">Очистити</button>
+<button type="button" onclick="revealLetter()">Показати літеру</button>
+<button type="button" onclick="revealWord()">Показати слово</button>
+    </div>
+</div>
+  <div class="box">
+    <div class="board-wrap"><table id="cw"><tr><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td></tr>
+<tr><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td></tr>
+<tr><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td></tr>
+<tr><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td></tr>
+<tr><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td><div class="num">1</div><input maxlength="1" id="cell-4-8" data-sol="П" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><input maxlength="1" id="cell-4-9" data-sol="О" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><div class="num">2</div><input maxlength="1" id="cell-4-10" data-sol="С" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><input maxlength="1" id="cell-4-11" data-sol="Т" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td></tr>
+<tr><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td><input maxlength="1" id="cell-5-10" data-sol="Т" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td></tr>
+<tr><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td><div class="num">3</div><input maxlength="1" id="cell-6-9" data-sol="Б" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><input maxlength="1" id="cell-6-10" data-sol="А" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><input maxlength="1" id="cell-6-11" data-sol="Г" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><input maxlength="1" id="cell-6-12" data-sol="А" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><input maxlength="1" id="cell-6-13" data-sol="Ж" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td class="black"></td><td class="black"></td><td class="black"></td></tr>
+<tr><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td><div class="num">4</div><input maxlength="1" id="cell-7-4" data-sol="Р" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td class="black"></td><td class="black"></td><td><div class="num">5</div><input maxlength="1" id="cell-7-7" data-sol="В" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td class="black"></td><td class="black"></td><td><input maxlength="1" id="cell-7-10" data-sol="Н" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td></tr>
+<tr><td class="black"></td><td class="black"></td><td class="black"></td><td><div class="num">6</div><input maxlength="1" id="cell-8-3" data-sol="Д" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><input maxlength="1" id="cell-8-4" data-sol="Е" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><div class="num">7</div><input maxlength="1" id="cell-8-5" data-sol="К" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><input maxlength="1" id="cell-8-6" data-sol="Л" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><input maxlength="1" id="cell-8-7" data-sol="А" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><input maxlength="1" id="cell-8-8" data-sol="Р" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><input maxlength="1" id="cell-8-9" data-sol="А" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><input maxlength="1" id="cell-8-10" data-sol="Ц" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><input maxlength="1" id="cell-8-11" data-sol="І" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><input maxlength="1" id="cell-8-12" data-sol="Я" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td></tr>
+<tr><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td><input maxlength="1" id="cell-9-4" data-sol="Й" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><input maxlength="1" id="cell-9-5" data-sol="О" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td class="black"></td><td><input maxlength="1" id="cell-9-7" data-sol="Г" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td class="black"></td><td class="black"></td><td><input maxlength="1" id="cell-9-10" data-sol="І" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td></tr>
+<tr><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td><input maxlength="1" id="cell-10-4" data-sol="С" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><input maxlength="1" id="cell-10-5" data-sol="Л" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td class="black"></td><td><input maxlength="1" id="cell-10-7" data-sol="О" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td class="black"></td><td class="black"></td><td><input maxlength="1" id="cell-10-10" data-sol="Я" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td></tr>
+<tr><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td><input maxlength="1" id="cell-11-5" data-sol="І" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td class="black"></td><td><input maxlength="1" id="cell-11-7" data-sol="Н" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td class="black"></td><td class="black"></td><td class="black"></td><td><div class="num">8</div><input maxlength="1" id="cell-11-11" data-sol="К" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td></tr>
+<tr><td class="black"></td><td class="black"></td><td><div class="num">9</div><input maxlength="1" id="cell-12-2" data-sol="О" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><input maxlength="1" id="cell-12-3" data-sol="Г" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><input maxlength="1" id="cell-12-4" data-sol="Л" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><input maxlength="1" id="cell-12-5" data-sol="Я" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><input maxlength="1" id="cell-12-6" data-sol="Д" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td><input maxlength="1" id="cell-12-11" data-sol="В" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td></tr>
+<tr><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td><input maxlength="1" id="cell-13-11" data-sol="И" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td></tr>
+<tr><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td><input maxlength="1" id="cell-14-11" data-sol="Т" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td></tr>
+<tr><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td><div class="num">10</div><input maxlength="1" id="cell-15-10" data-sol="П" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><input maxlength="1" id="cell-15-11" data-sol="О" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><input maxlength="1" id="cell-15-12" data-sol="Ї" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><input maxlength="1" id="cell-15-13" data-sol="З" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td><input maxlength="1" id="cell-15-14" data-sol="Д" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td class="black"></td><td class="black"></td></tr>
+<tr><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td><input maxlength="1" id="cell-16-11" data-sol="К" inputmode="text" autocomplete="off" autocapitalize="characters"/></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td></tr></table></div>
+</div>
+  <div class="box">
+    <div class="card"><h3>По горизонталі</h3><ol>
+      <li value="1">Місце на кордоні, де перевіряють документи й товари. <em>(4 літери)</em></li>
+      <li value="3">Речі пасажира, які він перевозить із собою. <em>(5 літер)</em></li>
+      <li value="6">Офіційний документ, у якому зазначають дані про товар. <em>(10 літер)</em></li>
+      <li value="9">Перевірка товарів, багажу або документів. <em>(5 літер)</em></li>
+      <li value="10">Залізничний транспорт, що складається з вагонів. <em>(5 літер)</em></li>
+    </ol></div>
+    <div class="card"><h3>По вертикалі</h3><ol>
+      <li value="2">Місце, де зупиняються та відправляються поїзди. <em>(7 літер)</em></li>
+      <li value="4">Шлях поїзда від однієї станції до іншої. <em>(4 літери)</em></li>
+      <li value="5">Частина поїзда, у якій перевозять пасажирів або вантаж. <em>(5 літер)</em></li>
+      <li value="7">Дві металеві смуги, по яких рухається поїзд. <em>(5 літер)</em></li>
+      <li value="8">Документ пасажира для проїзду в поїзді. <em>(7 літер)</em></li>
+    </ol></div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<script>
+window.WORDS = [
+  ['cell-4-8','cell-4-9','cell-4-10','cell-4-11'],
+  ['cell-6-9','cell-6-10','cell-6-11','cell-6-12','cell-6-13'],
+  ['cell-8-3','cell-8-4','cell-8-5','cell-8-6','cell-8-7','cell-8-8','cell-8-9','cell-8-10','cell-8-11','cell-8-12'],
+  ['cell-12-2','cell-12-3','cell-12-4','cell-12-5','cell-12-6'],
+  ['cell-15-10','cell-15-11','cell-15-12','cell-15-13','cell-15-14'],
+  ['cell-4-10','cell-5-10','cell-6-10','cell-7-10','cell-8-10','cell-9-10','cell-10-10'],
+  ['cell-7-4','cell-8-4','cell-9-4','cell-10-4'],
+  ['cell-7-7','cell-8-7','cell-9-7','cell-10-7','cell-11-7'],
+  ['cell-8-5','cell-9-5','cell-10-5','cell-11-5','cell-12-5'],
+  ['cell-11-11','cell-12-11','cell-13-11','cell-14-11','cell-15-11','cell-16-11']
+];
+window.lastCell = null;
+
+window.normalize = function(ch){
+  return (ch || '').toUpperCase().replace(/\s+/g,'').replace(/[^А-ЯІЇЄҐA-Z]/g,'');
+};
+window.getCell = function(id){ return document.getElementById(id); };
+window.tdOf = function(input){ return input ? input.parentElement : null; };
+
+window.clearMarks = function(){
+  var tds = document.querySelectorAll('#cw td');
+  for (var i = 0; i < tds.length; i++) tds[i].classList.remove('ok','bad','hint');
+};
+
+window.getRelatedWords = function(cellId){
+  var related = [];
+  for (var w = 0; w < WORDS.length; w++) {
+    if (WORDS[w].indexOf(cellId) !== -1) related.push(WORDS[w]);
+  }
+  return related;
+};
+
+window.checkOneWord = function(ids){
+  var full = true;
+  var correct = true;
+  var hasAnyValue = false;
+
+  for (var i = 0; i < ids.length; i++) {
+    var el = getCell(ids[i]);
+    if (!el) continue;
+    var val = normalize(el.value);
+    var sol = normalize(el.getAttribute('data-sol'));
+    if (val) hasAnyValue = true;
+    if (!val) full = false;
+    if (val !== sol) correct = false;
+  }
+
+  if (!hasAnyValue) return false;
+
+  for (var j = 0; j < ids.length; j++) {
+    var e = getCell(ids[j]);
+    if (!e) continue;
+    tdOf(e).classList.remove('ok','bad','hint');
+  }
+
+  if (full && correct) {
+    for (var k = 0; k < ids.length; k++) {
+      var okCell = getCell(ids[k]);
+      if (!okCell) continue;
+      tdOf(okCell).classList.add('ok');
+    }
+  } else {
+    for (var n = 0; n < ids.length; n++) {
+      var badCell = getCell(ids[n]);
+      if (!badCell) continue;
+      tdOf(badCell).classList.add('bad');
+    }
+  }
+  return true;
+};
+
+window.checkAll = function(){
+  clearMarks();
+
+  var total = WORDS.length;
+  var correctCount = 0;
+
+  for (var i = 0; i < WORDS.length; i++) {
+    var ids = WORDS[i];
+    var full = true;
+    var correct = true;
+
+    for (var j = 0; j < ids.length; j++) {
+      var el = getCell(ids[j]);
+      if (!el) continue;
+
+      var val = normalize(el.value);
+      var sol = normalize(el.getAttribute('data-sol'));
+
+      if (!val) full = false;
+      if (val !== sol) correct = false;
+    }
+
+    if (full && correct) {
+      correctCount++;
+      for (var k = 0; k < ids.length; k++) {
+        tdOf(getCell(ids[k])).classList.add('ok');
+      }
+    } else {
+      for (var k = 0; k < ids.length; k++) {
+        tdOf(getCell(ids[k])).classList.add('bad');
+      }
+    }
+  }
+
+  // вывод результата
+  var resultEl = document.getElementById('result');
+  resultEl.innerHTML = "Результат: " + correctCount + " / " + total;
+
+  return false;
+};
+
+window.clearAll = function(){
+  var els = document.querySelectorAll('#cw input');
+  for (var i = 0; i < els.length; i++) {
+    els[i].value = '';
+    tdOf(els[i]).classList.remove('ok','bad','hint');
+  }
+
+  document.getElementById('result').innerHTML = "";
+
+  if (els.length) {
+    els[0].focus();
+    lastCell = els[0];
+  }
+
+  return false;
+};
+
+window.currentCell = function(){
+  var a = document.activeElement;
+  if (a && a.tagName === 'INPUT' && a.closest('#cw')) return a;
+  if (lastCell) return lastCell;
+  return document.querySelector('#cw input');
+};
+
+window.revealLetter = function(){
+  var a = currentCell();
+  if (!a) return false;
+  a.value = a.getAttribute('data-sol') || '';
+  tdOf(a).classList.remove('ok','bad');
+  tdOf(a).classList.add('hint');
+  lastCell = a;
+  a.focus();
+  return false;
+};
+
+window.revealWord = function(){
+  var a = currentCell();
+  if (!a) return false;
+  var wordIds = null;
+  for (var w = 0; w < WORDS.length; w++) {
+    if (WORDS[w].indexOf(a.id) !== -1) { wordIds = WORDS[w]; break; }
+  }
+  if (!wordIds) return false;
+  for (var i = 0; i < wordIds.length; i++) {
+    var el = getCell(wordIds[i]);
+    if (!el) continue;
+    el.value = el.getAttribute('data-sol') || '';
+    tdOf(el).classList.remove('ok','bad');
+    tdOf(el).classList.add('hint');
+  }
+  a.focus();
+  return false;
+};
+
+window.moveNext = function(el){
+  var inputs = Array.prototype.slice.call(document.querySelectorAll('#cw input'));
+  var idx = inputs.indexOf(el);
+  if (idx >= 0 && idx < inputs.length - 1) inputs[idx + 1].focus();
+};
+
+document.addEventListener('input', function(e){
+  var a = e.target;
+  if (!a.matches || !a.matches('#cw input')) return;
+  a.value = normalize(a.value).slice(0,1);
+  lastCell = a;
+  tdOf(a).classList.remove('ok','bad','hint');
+  if (a.value) moveNext(a);
+}, false);
+
+document.addEventListener('focusin', function(e){
+  if (e.target.matches && e.target.matches('#cw input')) lastCell = e.target;
+}, false);
+
+document.addEventListener('click', function(e){
+  if (e.target.matches && e.target.matches('#cw input')) lastCell = e.target;
+}, false);
+
+document.getElementById('btn-check').addEventListener('click', checkAll);
+document.getElementById('btn-clear').addEventListener('click', clearAll);
+document.getElementById('btn-letter').addEventListener('click', revealLetter);
+document.getElementById('btn-word').addEventListener('click', revealWord);
+</script>
+
+</body>
+</html>
